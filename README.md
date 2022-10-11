@@ -25,3 +25,6 @@ AtcoderのユーザーIDを入力
 ```
 
 出てきた差分をPushしてマージ
+
+## Sample
+[](./progress.gif)

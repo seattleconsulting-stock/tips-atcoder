@@ -7,6 +7,7 @@ import time
 from time import sleep
 from selenium import webdriver
 import chromedriver_binary
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 import subprocess
 from subprocess import PIPE
@@ -17,8 +18,11 @@ def main():
     if len(submissions) == 0:
         print("提出履歴がありません")
         return
+    pro_bar = ' ' * (len(submissions) - 1)
+    print('\r[{0}] {1}/{2}'.format(pro_bar, 0, len(submissions)), end='')
     make_submission_folder(submissions)
     insert_answers(submissions)
+    print("\n取得が完了しました")
 
 
 def get_submission_data():
@@ -55,8 +59,11 @@ def insert_answers(submissions):
     AtCoderの提出履歴を元に、ファイルを作成する
     """
 
-    driver = webdriver.Chrome()
-    for submission in submissions:
+    options = Options()
+    # ブラウザを表示しない
+    options.headless = True
+    driver = webdriver.Chrome(options=options)
+    for i, submission in enumerate(submissions):
         contest_id = submission["contest_id"].upper()
         problem_id = submission["problem_id"][-1]
         sub_url = "https://atcoder.jp/contests/" + \
@@ -81,6 +88,12 @@ def insert_answers(submissions):
 
         # 負荷軽減のために3秒待機
         sleep(3)
+
+        # 進捗を表示
+        pro_size = len(submissions)
+        pro_bar = ('=' * (i + 1)) + (' ' * (pro_size - i - 1))
+        print('\r[{0}] {1}/{2}'.format(pro_bar, i + 1, pro_size), end='')
+        time.sleep(0.5)
 
     driver.quit()
 
@@ -115,4 +128,5 @@ if __name__ == '__main__':
     # APIのパスの設定
     api_path = "https://kenkoooo.com/atcoder/atcoder-api/v3/user/submissions?user=" + \
         user_id + "&from_second=" + unix_second
+    print("取得中...")
     main()
