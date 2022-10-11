@@ -12,6 +12,12 @@ python3 -m venv venv
 source venv/bin/activate
 ```
 
+各種インストール
+```
+venv/bin/python3 -m pip install --upgrade pip
+pip3 install -r requirements.txt
+```
+
 main.pyを実行
 ```
 python3 main.py
