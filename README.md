@@ -25,3 +25,6 @@ AtcoderのユーザーIDを入力
 ```
 
 出てきた差分をPushしてマージ
+
+## Sample
+<img width="100%" src="https://raw.githubusercontent.com/seattleconsulting-stock/tips-atcoder/master/progress.gif">
