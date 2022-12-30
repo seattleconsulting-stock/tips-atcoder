@@ -33,8 +33,7 @@ def get_submission_data():
     response = requests.get(api_url)
     jsonData = response.json()
     # TODO: Python以外の言語の提出も取得できるようにする
-    jsonData = list(
-        filter(lambda x: x["result"] == "AC" and "Python" in x["language"], jsonData))
+    jsonData = list(filter(lambda x: x["result"] == "AC" and ("Python" in x["language"] or "PyPy3" in x["language"]), jsonData))
     submissions = dict()
     # 各問題の最新の提出を取得する
     for data in jsonData:
